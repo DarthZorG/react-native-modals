@@ -139,9 +139,9 @@ export default class DraggableView extends Component<Props> {
 
   panResponder = PanResponder.create({
     onMoveShouldSetPanResponder: (evt, gestureState) => {
-      const { dx, dy } = gestureState
+      const { dx, dy } = gestureState;
 
-      return dx > 2 || dx < -2 || dy > 2 || dy < -2
+      return dx > 3 || dx < -3 || dy > 3 || dy < -3;
     },
     onStartShouldSetPanResponder: () => true,
     onPanResponderMove: (event, gestureState) => {
