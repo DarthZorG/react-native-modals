@@ -139,9 +139,21 @@ export default class DraggableView extends Component<Props> {
 
   panResponder = PanResponder.create({
     onMoveShouldSetPanResponder: (evt, gestureState) => {
+      const isAllowedDirection = d => (
+        this.currentSwipeDirection === d && this.allowedDirections.includes(d)
+      );
       const { dx, dy } = gestureState
+      if (isAllowedDirection('up') && Math.abs(dx) < Math.abs(dy) && dy < -3)
+        return true;
+      if (isAllowedDirection('down') && Math.abs(dx) < Math.abs(dy) && dy > 3)
+        return true;
+      if (isAllowedDirection('left') && Math.abs(dx) > Math.abs(dy) && dx < -3)
+        return true;
+      if (isAllowedDirection('right') && Math.abs(dx) > Math.abs(dy) && dx > 3)
+        return true;
+      
+      return false;
 
-      return dx > 2 || dx < -2 || dy > 2 || dy < -2
     },
     onStartShouldSetPanResponder: () => true,
     onPanResponderMove: (event, gestureState) => {
